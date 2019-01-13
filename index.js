@@ -16,6 +16,7 @@ mongoose.connect(config.DB_URI)
   })
   .catch(e => console.error(`Error ${e}`));
 
+app.use(bodyParser.json());
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/rentals', rentalRoutes);
 const PORT = process.env.PORT || 3000;
