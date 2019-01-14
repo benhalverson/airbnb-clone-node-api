@@ -1,56 +1,49 @@
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   username: {
     type: String,
-    min: [4, 'too short...'],
-    max: [32, 'too long...']
+    min: [4, 'Too short, min is 4 characters'],
+    max: [32, 'Too long, max is 32 characters']
   },
   email: {
     type: String,
-    min: [4, 'too short...'],
-    max: [32, 'too long...'],
-    lowercase: true,
+    min: [4, 'Too short, min is 4 characters'],
+    max: [32, 'Too long, max is 32 characters'],
     unique: true,
+    lowercase: true,
     required: 'Email is required',
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/]
   },
   password: {
     type: String,
-    min: [4, 'too short...'],
-    max: [32, 'too long...'],
+    min: [4, 'Too short, min is 4 characters'],
+    max: [32, 'Too long, max is 32 characters'],
     required: 'Password is required'
   },
-  rentals: [{
-    type: Schema.Types.ObjectId, ref: 'Rental'
-  }]
+  stripeCustomerId: String,
+  revenue: Number,
+  rentals: [{type: Schema.Types.ObjectId, ref: 'Rental'}],
+  bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }]
 });
-userSchema.methods.hasSamePassword = (requestedPassword) => {
+
+userSchema.methods.hasSamePassword = function(requestedPassword) {
+
   return bcrypt.compareSync(requestedPassword, this.password);
 }
-userSchema.pre('save', (next) => {
+
+
+userSchema.pre('save', function(next) {
   const user = this;
-  const saltRounds = 10;
-  const minor = 'b'
-  debugger;
-  bcrypt.genSalt(saltRounds, minor)
-    .then((hash) => {
-    // Store hash in your password DB.
-    console.log('promise 1', hash);
-    return bcrypt.hash(hash, saltRounds)
-      .then((hash) => {
-        console.log('promise 2', user.hash);
-        console.log('username', user)
+
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(user.password, salt, function(err, hash) {
         user.password = hash;
         next();
-      })
-      .catch(err => {
-        console.error(`Failed to save to DB ${err}`);
-      });
-  }).catch(err => {
-    console.error(`Failed to encrypt ${err}`);
+    });
   });
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema );
