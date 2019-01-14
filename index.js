@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const config = require('./config');
 const rentalRoutes = require('./routes/rentals');
 const userRoutes = require('./routes/users');
-const bookingRoutes = require('./routes/booking')
+const bookingRoutes = require('./routes/booking');
+const paymentRoutes = require('./routes/payment');
 const FakeDb = require('./fake-db');
 const app = express();
 mongoose.Promise = Promise;  
@@ -21,8 +22,8 @@ app.use(bodyParser.json());
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/rentals', rentalRoutes);
 app.use('/api/v1/bookings', bookingRoutes);
+app.use('/api/v1/payments', paymentRoutes);
 // TODO
-// app.use('/api/v1/payments', paymentRoutes);
 // app.use('/api/v1', imageUploadRoutes);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
