@@ -20,9 +20,8 @@ app.use(bodyParser.json());
 // API Routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/rentals', rentalRoutes);
-
-// TODO
 app.use('/api/v1/bookings', bookingRoutes);
+// TODO
 // app.use('/api/v1/payments', paymentRoutes);
 // app.use('/api/v1', imageUploadRoutes);
 const PORT = process.env.PORT || 3000;
