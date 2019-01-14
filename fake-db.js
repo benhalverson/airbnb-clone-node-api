@@ -1,50 +1,35 @@
 const Rental = require('./models/rental');
+const User = require('./models/user');
+// const Booking = require('./models/booking');
+
+const fakeDbData = require('./data');
 
 class FakeDB {
   constructor() {
-    this.rentals = [{
-        title: 'title 1',
-        city: 'Santa Clara',
-        street: 'Main stree',
-        category: 'apartment',
-        image: 'localhost:4200/lol.png',
-        bedrooms: 2,
-        description: 'lorem text',
-        dailyRate: 50
-      },
-      {
-        title: 'title 2',
-        city: 'San Francisco',
-        street: 'Main street',
-        category: 'condo',
-        image: 'localhost:4200/lol.png',
-        bedrooms: 2,
-        description: 'lorem text',
-        dailyRate: 90
-      },
-      {
-        title: 'title 3',
-        city: 'San Jose',
-        street: '1st Street',
-        category: 'House',
-        image: 'localhost:4200/lol.png',
-        bedrooms: 2,
-        description: 'lorem text',
-        dailyRate: 60
-      }
-    ]
+    this.rentals = fakeDbData.rentals;
+    this.users = fakeDbData.users;
   }
 
   pushRentalsToDB() {
+    const user = new User(this.users[0]);
+    const user2 = new User(this.users[1]);
+
     this.rentals.forEach((rental) => {
       const newRental = new Rental(rental);
+      newRental.user = user;
 
+      user.rentals.push(newRental);
       newRental.save();
     });
+
+    user.save();
+    user2.save();
   }
 
   async cleanDB() {
    await Rental.remove({});
+   await User.remove({});
+
   }
 
   seedDB() {

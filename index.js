@@ -9,7 +9,7 @@ const userRoutes = require('./routes/users');
 const FakeDb = require('./fake-db');
 const app = express();
 mongoose.Promise = Promise;  
-mongoose.connect(config.DB_URI)
+mongoose.connect('mongodb://localhost:27017/airbnb-clone')
   .then(() => {
     const fakeDB = new FakeDb();
     fakeDB.seedDB();
