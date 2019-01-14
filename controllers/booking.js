@@ -7,6 +7,7 @@ const {
 } = require('../helpers/mongoose');
 const moment = require('moment');
 const config = require('../config');
+const stripe = require('stripe')(config.STRIPE_SK);
 
 exports.createBooking = (req, res) => {
   const {
