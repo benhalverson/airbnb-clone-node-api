@@ -98,7 +98,7 @@ exports.register =  (req, res) =>  {
 
 exports.authMiddleware = (req, res, next) => {
   const token = req.headers.authorization;
-
+  debugger
   if (token) {
     const user = parseToken(token);
 

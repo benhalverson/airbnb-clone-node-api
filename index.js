@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const config = require('./config');
 const rentalRoutes = require('./routes/rentals');
 const userRoutes = require('./routes/users');
@@ -18,7 +19,7 @@ mongoose.connect(config.DB_URI)
   .catch(e => console.error(`Error ${e}`));
 
 app.use(bodyParser.json());
-
+app.use(cors());
 // API Routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/rentals', rentalRoutes);
