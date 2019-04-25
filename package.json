@@ -10,7 +10,7 @@
   "author": "Ben Halverson <benhalverson33@gmail.com> (http://benhalverson.me/)",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "2.387.0",
+    "aws-sdk": "2.442.0",
     "bcrypt": "3.0.3",
     "body-parser": "1.18.3",
     "cors": "2.8.5",
