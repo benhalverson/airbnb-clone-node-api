@@ -12,7 +12,7 @@
   "dependencies": {
     "aws-sdk": "2.387.0",
     "bcrypt": "3.0.6",
-    "aws-sdk": "2.442.0",
+    "aws-sdk": "2.444.0",
     "bcrypt": "3.0.6",
     "body-parser": "1.18.3",
     "cors": "2.8.5",
