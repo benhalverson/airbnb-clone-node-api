@@ -144,11 +144,16 @@ returns some sample data
 `
 
 
-GET request by ID 
+GET request apartment by ID 
 
 http://localhost:3000/api/v1/rentals/:id
 `http://localhost:3000/api/v1/rentals/5cea3be494a945eacb8f1bcb`
 Needs a Bearer token
+
+GET user by ID
+
+http://localhost:3000/api/v1/users/:id
+`http://localhost:3000/api/v1/users/5cea3be494a945eacb8f1bc7`
 
 
 
