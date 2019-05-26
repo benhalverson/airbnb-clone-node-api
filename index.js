@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const logger = require('morgan');
 const config = require('./config');
 const rentalRoutes = require('./routes/rentals');
 const userRoutes = require('./routes/users');
@@ -15,11 +16,13 @@ mongoose.connect(config.DB_URI)
   .then(() => {
     const fakeDB = new FakeDb();
     fakeDB.seedDB();
+    console.log('seeded db')
   })
   .catch(e => console.error(`Error ${e}`));
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use(logger('dev'));
 // API Routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/rentals', rentalRoutes);
