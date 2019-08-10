@@ -29,17 +29,17 @@ const userSchema = new Schema({
   bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }]
 });
 
-userSchema.methods.hasSamePassword = function(requestedPassword) {
+userSchema.methods.hasSamePassword = (requestedPassword) => {
 
   return bcrypt.compareSync(requestedPassword, this.password);
 }
 
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', (next) => {
   const user = this;
 
-  bcrypt.genSalt(10, function(err, salt) {
-    bcrypt.hash(user.password, salt, function(err, hash) {
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(user.password, salt, (err, hash) => {
         user.password = hash;
         next();
     });
