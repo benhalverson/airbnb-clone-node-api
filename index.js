@@ -11,15 +11,17 @@ const paymentRoutes = require('./routes/payment');
 const imageUploadRoutes = require('./routes/image-upload');
 const FakeDb = require('./fake-db');
 const app = express();
-mongoose.Promise = Promise;  
-mongoose.connect(config.DB_URI)
-  .then(() => {
-    const fakeDB = new FakeDb();
-    fakeDB.seedDB();
-    console.log('seeded db')
-  })
-  .catch(e => console.error(`Error ${e}`));
-
+mongoose.Promise = Promise;
+mongoose.set('useCreateIndex', true);
+const db = async () => {
+	try {
+	  console.log('db connected');
+		await mongoose.connect(config.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+	} catch (e) {
+		console.error(`Connection Error: ${e.name}`);
+	}
+};
+db();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(logger('dev'));
@@ -31,5 +33,5 @@ app.use('/api/v1/payments', paymentRoutes);
 app.use('/api/v1', imageUploadRoutes);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  `listening on ${PORT}`;
+	`listening on ${PORT}`;
 });
