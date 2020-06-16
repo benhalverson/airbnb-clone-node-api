@@ -9,7 +9,6 @@ const userRoutes = require('./routes/users');
 const bookingRoutes = require('./routes/booking');
 const paymentRoutes = require('./routes/payment');
 const imageUploadRoutes = require('./routes/image-upload');
-const FakeDb = require('./fake-db');
 const app = express();
 mongoose.Promise = Promise;
 mongoose.set('useCreateIndex', true);

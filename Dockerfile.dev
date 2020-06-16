@@ -1,0 +1,13 @@
+FROM node:12.18.0-stretch
+
+# RUN apk --no-cache add --virtual builds-deps build-base python
+# RUN apt-get update
+# RUN apt-get install -y build-essential
+# RUN apt-get install -y python
+WORKDIR /app
+
+COPY package* ./
+RUN npm i
+RUN npm rebuild bcrypt --build-from-source
+COPY . .
+CMD ["npm", "run", "start"]
