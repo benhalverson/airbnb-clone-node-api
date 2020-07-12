@@ -45,14 +45,18 @@ exports.auth = (req, res) => {
 		}
 
 		if (user.hasSamePassword(password)) {
+			console.log('password', password);
+			console.log('token', token);
 			const token = jwt.sign(
 				{
 					userId: user.id,
-					username: user.username
+					username: user.username,
+					password: user.password
 				},
 				config.SECRET,
 				{ expiresIn: '1h' }
 			);
+			console.log('token', token);
 			return res.json(token);
 		} else {
 			return res.status(422).send({ errors: [{ title: 'Wrong Data!', detail: 'Wrong email or password' }] });
@@ -62,15 +66,19 @@ exports.auth = (req, res) => {
 
 exports.register = (req, res) => {
 	const { username, email, password, passwordConfirmation } = req.body;
+	console.log('register ==========');
 	console.log(req.body.username)
 	console.log(req.body.email)
 	console.log(req.body.password)
 	console.log(req.body.passwordConfirmation)
+	console.log('register ==========');
 	if (!password || !email) {
+		console.log('hey')
 		return res.status(422).send({ errors: [{ title: 'Data missing!', detail: 'Provide email and password!' }] });
 	}
 
 	if (password !== passwordConfirmation) {
+		console.log('hi');
 		return res
 			.status(422)
 			.send({ errors: [{ title: 'Invalid passsword!', detail: 'Password is not a same as confirmation!' }] });
@@ -92,7 +100,7 @@ exports.register = (req, res) => {
 			email,
 			password
 		});
-
+		console.log('reg', username, email, password);
 		// user.save();
 		// user.then(() => {
 		// 		return res.json({ registered: true });
@@ -101,6 +109,7 @@ exports.register = (req, res) => {
 		// 		return res.status(422).send({ errors: normalizeErrors(err.errors) });
 		// 	});
 		user.save((err) => {
+			console.log('error', err);
 			if (err) {
 				return res.status(422).send({ errors: normalizeErrors(err.errors) });
 			}

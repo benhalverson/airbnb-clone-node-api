@@ -1,8 +1,20 @@
-version: '3'
+version: '3.7'
+
 services:
   mongo:
-    image: 'mongo:latest'
+    image: 'mongo'
+    container_name: 'mongo-database'
+    # environment:
+    # - MONGO_INITDB_DATABASE=airbnb-clone
+    # - MONGO_INITDB_ROOT_USERNAME=ben
+    # - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      # - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./mongo-volume:/data/db
+    ports:
+      - '27017-27019:27017-27019'
   api:
+    container_name: 'node_api'
     depends_on:
       - mongo
     build:

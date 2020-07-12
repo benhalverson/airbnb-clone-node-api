@@ -14,7 +14,7 @@ mongoose.Promise = Promise;
 mongoose.set('useCreateIndex', true);
 const db = async () => {
 	try {
-	  console.log('db connected');
+		console.log('db connected');
 		await mongoose.connect(config.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 	} catch (e) {
 		console.error(`Connection Error: ${e.name}`);
